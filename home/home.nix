@@ -9,12 +9,34 @@
     stateVersion = "24.05";
 
     packages = [
-      # # You can also create simple shell scripts directly inside your
-      # # configuration. For example, this adds a command 'my-hello' to your
-      # # environment:
-      # (pkgs.writeShellScriptBin "my-hello" ''
-      #   echo "Hello, ${config.home.username}!"
-      # '')
+      (pkgs.writeShellApplication {
+        name = "xivlauncher-1p";
+        # NOTE: do NOT specify `op` here; we need to depend on the global install from NixOS,
+        # as the bare package doesn't seem to integrate with polkit correctly AFAICT
+        runtimeInputs = [
+          pkgs.curl
+          pkgs.xivlauncher
+        ];
+        text = ''
+          function fetchOTP {
+            op item get --otp MogStation
+          }
+
+          function sendRequest {
+            curl http://localhost:4646/ffxivlauncher/"''${1:-}"
+          }
+
+          function passOTPOnce {
+            while ! sendRequest 2>/dev/null; do
+              sleep 0.5
+            done
+            sendRequest "$(fetchOTP)"
+          }
+
+          passOTPOnce &
+          XIVLauncher.Core "$@"
+        '';
+      })
 
       pkgs.python3
       pkgs.xivlauncher
@@ -23,6 +45,7 @@
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (pkgs.lib.getName pkg) [
+      "1password-cli"
       "steam"
       "steam-run"
       "steam-original"
