@@ -15,6 +15,9 @@
 
       set ruler
       set number
+
+      set listchars=tab:␉·,trail:·,extends:>,precedes:<
+      set list
     '';
   };
 }
