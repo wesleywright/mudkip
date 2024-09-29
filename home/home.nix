@@ -19,12 +19,19 @@ let
       }
 
       function passOTPOnce {
+        while ! fetchOTP 2>/dev/null; do
+          echo "Could not fetch OTP, sleeping"
+          sleep 1
+        done
+        
         while ! sendRequest 2>/dev/null; do
-          sleep 0.5
+          echo "HTTP server is not yet ready, sleeping"
+          sleep 1
         done
         sendRequest "$(fetchOTP)"
       }
 
+      # Ensure that 1Password is running
       passOTPOnce &
       XIVLauncher.Core "$@"
     '';
@@ -35,6 +42,10 @@ let
     exec = "${xivlauncher-1p}/bin/xivlauncher-1p";
   };
 in {
+  imports = [
+    ./fish.nix
+  ];
+
   home = {
     username = "naptime";
     homeDirectory = "/home/naptime";
@@ -76,8 +87,6 @@ in {
     };
 
     firefox.enable = true;
-
-    fish.enable = true;
 
     git = {
       enable = true;
