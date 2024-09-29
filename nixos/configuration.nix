@@ -9,6 +9,7 @@
     [
       ./audio.nix    
       ./hardware-configuration.nix
+      ./users.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -57,14 +58,6 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.naptime = {
-     isNormalUser = true;
-     extraGroups = [
-       "wheel"
-     ];
-  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
