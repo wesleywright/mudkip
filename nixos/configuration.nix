@@ -5,28 +5,15 @@
     [
       ./1password.nix
       ./audio.nix    
+      ./boot.nix
       ./hardware-configuration.nix
+      ./locale.nix
       ./steam.nix
       ./unfree.nix
       ./users.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
   networking.hostName = "mudkip"; # Define your hostname.
-
-  # Set your time zone.
-  time.timeZone = "US/Central";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
 
   services.btrfs.autoScrub = {
     enable = true;
