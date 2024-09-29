@@ -1,4 +1,4 @@
-# to /etc/nixos/configuration.nix instead. config, lib, pkgs, modulesPath, ... }:
+{ config, lib, pkgs, modulesPath, ... }:
 
 {
   imports =

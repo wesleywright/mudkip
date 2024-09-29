@@ -7,9 +7,8 @@
 {
   imports =
     [
-      # Include the results of the hardware scan.
+      ./audio.nix    
       ./hardware-configuration.nix
-    
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -50,8 +49,6 @@
   # services.printing.enable = true;
 
   hardware.uinput.enable = true;
-  # Enable sound.
-  hardware.pulseaudio.enable = true;
   # OR
   # services.pipewire = {
   #   enable = true;
@@ -65,7 +62,6 @@
   users.users.naptime = {
      isNormalUser = true;
      extraGroups = [
-       "audio"
        "wheel"
      ];
   };
