@@ -6,6 +6,7 @@
     ./fish.nix
     ./git.nix
     ./neovim.nix
+    ./ssh.nix
   ];
 
   home = {
