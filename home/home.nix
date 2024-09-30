@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./direnv.nix
     ./ffxiv.nix
     ./fish.nix
     ./git.nix
