@@ -1,13 +1,12 @@
 { pkgs, ... }:
 
 let
-  xivlauncher-1p = pkgs.writeShellApplication {
-    name = "xivlauncher-1p";
+  xivlauncher-submit-otp = pkgs.writeShellApplication {
+    name = "xivlauncher-submit-otp";
     # NOTE: do NOT specify `op` here; we need to depend on the global install from NixOS,
     # as the bare package doesn't seem to integrate with polkit correctly AFAICT
     runtimeInputs = [
       pkgs.curl
-      pkgs.xivlauncher
     ];
     text = ''
       function fetchOTP {
@@ -23,7 +22,7 @@ let
           echo "Could not fetch OTP, sleeping"
           sleep 1
         done
-        
+
         while ! sendRequest 2>/dev/null; do
           echo "HTTP server is not yet ready, sleeping"
           sleep 1
@@ -32,19 +31,21 @@ let
       }
 
       # Ensure that 1Password is running
-      passOTPOnce &
-      XIVLauncher.Core "$@"
+      passOTPOnce
     '';
   };
-  xivlauncher-1p-desktop = pkgs.makeDesktopItem {
-    name = "xivlauncher-1p-desktop";
-    desktopName = "Final Fantasy XIV (1Password)";
-    exec = "${xivlauncher-1p}/bin/xivlauncher-1p";
+  xivlauncher-submit-otp-desktop = pkgs.makeDesktopItem {
+    desktopName = "Fill FFXIV OTP";
+    categories = [ "Game" ];
+    exec = "${xivlauncher-submit-otp}/bin/xivlauncher-submit-otp";
+    icon = "object-unlocked";
+    name = "xivlauncher-submit-otp-desktop";
   };
 in {
   home.packages = [
-    xivlauncher-1p
-    xivlauncher-1p-desktop
+    pkgs.xivlauncher
+    xivlauncher-submit-otp
+    xivlauncher-submit-otp-desktop
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
