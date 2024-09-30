@@ -2,5 +2,5 @@
 
 {
   hardware.pulseaudio.enable = true;
-  users.users.naptime.extraGroups = ["audio"];
+  users.users.naptime.extraGroups = [ "audio" ];
 }

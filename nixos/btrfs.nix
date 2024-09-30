@@ -36,12 +36,12 @@ in
 {
   services.btrfs.autoScrub = {
     enable = true;
-    fileSystems = ["/"];
+    fileSystems = [ "/" ];
   };
 
   systemd = {
     timers."create-snapshots" = {
-      wantedBy = ["timers.target"];
+      wantedBy = [ "timers.target" ];
       timerConfig = {
         OnCalendar = "hourly";
         Persistent = true;

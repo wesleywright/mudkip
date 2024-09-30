@@ -16,12 +16,11 @@
     # Specifies API compatibility version, do not change on Home Manager upgrade
     stateVersion = "24.05";
 
-    packages = [
-      pkgs.python3
-    ];
+    packages = [ pkgs.python3 ];
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
     builtins.elem (pkgs.lib.getName pkg) [
       "steam"
       "steam-run"
@@ -31,7 +30,7 @@
   programs = {
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
-  
+
     bash = {
       enable = true;
       initExtra = ''

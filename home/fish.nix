@@ -238,14 +238,16 @@
       fish_vi_key_bindings
     '';
 
-    plugins = [{
-      name = "z";
-      src = pkgs.fetchFromGitHub {
-        owner = "jethrokuan";
-        repo = "z";
-        rev = "85f863f20f24faf675827fb00f3a4e15c7838d76";
-        sha256 = "1797n91ka5smj1h2qq7kdhs22qjyrpd0gk18lhk0s3izl36r31sl";
-      };
-    }];
+    plugins = [
+      {
+        name = "z";
+        src = pkgs.fetchFromGitHub {
+          owner = "jethrokuan";
+          repo = "z";
+          rev = "85f863f20f24faf675827fb00f3a4e15c7838d76";
+          sha256 = "1797n91ka5smj1h2qq7kdhs22qjyrpd0gk18lhk0s3izl36r31sl";
+        };
+      }
+    ];
   };
 }

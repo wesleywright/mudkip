@@ -5,9 +5,7 @@ let
     name = "xivlauncher-submit-otp";
     # NOTE: do NOT specify `op` here; we need to depend on the global install from NixOS,
     # as the bare package doesn't seem to integrate with polkit correctly AFAICT
-    runtimeInputs = [
-      pkgs.curl
-    ];
+    runtimeInputs = [ pkgs.curl ];
     text = ''
       function fetchOTP {
         op item get --otp MogStation
@@ -41,15 +39,13 @@ let
     icon = "object-unlocked";
     name = "xivlauncher-submit-otp-desktop";
   };
-in {
+in
+{
   home.packages = [
     pkgs.xivlauncher
     xivlauncher-submit-otp
     xivlauncher-submit-otp-desktop
   ];
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (pkgs.lib.getName pkg) [
-      "xivlauncher"
-    ];
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "xivlauncher" ];
 }
