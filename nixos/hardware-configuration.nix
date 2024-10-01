@@ -6,6 +6,10 @@
   ...
 }:
 
+let
+  externalStorageBtrfs = "/dev/disk/by-uuid/3ab5f40a-0c81-4d00-8940-62aea70097c4";
+  sataStorage2Btrfs = "/dev/disk/by-uuid/492fd323-2415-46c7-934a-661813a6b1e3";
+in
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
@@ -25,24 +29,30 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/3ab5f40a-0c81-4d00-8940-62aea70097c4";
+    device = externalStorageBtrfs;
     fsType = "btrfs";
     options = [ "subvol=root" ];
   };
 
   fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/3ab5f40a-0c81-4d00-8940-62aea70097c4";
+    device = externalStorageBtrfs;
     fsType = "btrfs";
     options = [ "subvol=home" ];
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/3ab5f40a-0c81-4d00-8940-62aea70097c4";
+    device = externalStorageBtrfs;
     fsType = "btrfs";
     options = [
       "subvol=nix"
       "noatime"
     ];
+  };
+
+  fileSystems."/mnt/games" = {
+    device = sataStorage2Btrfs;
+    fsType = "btrfs";
+    options = [ "subvol=games" ];
   };
 
   fileSystems."/boot" = {
