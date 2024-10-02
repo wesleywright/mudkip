@@ -16,6 +16,7 @@
     ./hardware-configuration.nix
     ./locale.nix
     ./networking.nix
+    ./sleep.nix
     ./steam.nix
     ./unfree.nix
     ./users.nix
