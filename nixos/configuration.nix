@@ -14,6 +14,7 @@
     ./desktop-environment.nix
     ./filesystems.nix
     ./flatpak.nix
+    ./fonts.nix
     ./hardware-configuration.nix
     ./locale.nix
     ./networking.nix
