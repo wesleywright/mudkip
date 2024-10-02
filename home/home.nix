@@ -9,6 +9,7 @@
     ./neovim.nix
     ./ssh.nix
     ./utilities.nix
+    ./wm.nix
   ];
 
   home = {
