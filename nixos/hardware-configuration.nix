@@ -8,7 +8,8 @@
 
 let
   externalStorageBtrfs = "/dev/disk/by-uuid/3ab5f40a-0c81-4d00-8940-62aea70097c4";
-  sataStorage2Btrfs = "/dev/disk/by-uuid/492fd323-2415-46c7-934a-661813a6b1e3";
+  storage1EncryptedDevice = "/dev/disk/by-label/storage1.luks";
+  storage1BtrfsDevice = "/dev/disk/by-label/storage1.btrfs";
 in
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -21,6 +22,8 @@ in
     "sd_mod"
   ];
   boot.initrd.kernelModules = [ ];
+  boot.initrd.luks.devices."storage1".device = storage1EncryptedDevice;
+
   boot.kernelModules = [
     "amdgpu"
     "kvm-amd"
@@ -50,9 +53,13 @@ in
   };
 
   fileSystems."/mnt/games" = {
-    device = sataStorage2Btrfs;
+    device = storage1BtrfsDevice;
     fsType = "btrfs";
-    options = [ "subvol=games" ];
+    options = [
+      "subvol=games"
+      # This drive is only used for game content, and shouldn't be considered necessary for booting
+      "nofail"
+    ];
   };
 
   fileSystems."/boot" = {
