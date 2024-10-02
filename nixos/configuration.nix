@@ -12,6 +12,7 @@
     ./boot.nix
     ./btrfs.nix
     ./desktop-environment.nix
+    ./filesystems.nix
     ./flatpak.nix
     ./hardware-configuration.nix
     ./locale.nix
