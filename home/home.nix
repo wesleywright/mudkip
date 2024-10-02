@@ -8,6 +8,7 @@
     ./git.nix
     ./neovim.nix
     ./ssh.nix
+    ./utilities.nix
   ];
 
   home = {
@@ -16,8 +17,6 @@
 
     # Specifies API compatibility version, do not change on Home Manager upgrade
     stateVersion = "24.05";
-
-    packages = [ pkgs.python3 ];
   };
 
   nixpkgs.config.allowUnfreePredicate =
