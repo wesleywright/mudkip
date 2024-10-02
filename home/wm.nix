@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 let
   monitorResolution = {
@@ -17,6 +17,7 @@ in
       bars = [
         {
           position = "top";
+          statusCommand = "${pkgs.i3status}/bin/i3status";
           trayOutput = "*";
         }
       ];
