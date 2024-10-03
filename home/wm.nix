@@ -37,7 +37,7 @@ in
       };
 
       # Maps to the "super" key.
-      modifier = "Mod1";
+      modifier = "Mod4";
 
       output = {
         "*" = {
