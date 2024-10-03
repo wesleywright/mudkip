@@ -1,6 +1,11 @@
 { pkgs, ... }:
 
 let
+  fonts = {
+    names = [ "Input Mono" ];
+    size = 11.0;
+  };
+
   monitorResolution = {
     width = 3840;
     height = 2160;
@@ -16,11 +21,14 @@ in
     config = {
       bars = [
         {
+          fonts = fonts;
           position = "top";
           statusCommand = "${pkgs.i3status}/bin/i3status";
           trayOutput = "*";
         }
       ];
+
+      fonts = fonts;
 
       gaps = {
         inner = 8;
