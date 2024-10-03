@@ -32,7 +32,7 @@ in
 
       gaps = {
         inner = 8;
-        smartBorders = "on";
+        smartBorders = "off";
         smartGaps = false;
       };
 
