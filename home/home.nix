@@ -7,6 +7,7 @@
     ./fish.nix
     ./git.nix
     ./neovim.nix
+    ./plasma
     ./ssh.nix
     ./utilities.nix
   ];

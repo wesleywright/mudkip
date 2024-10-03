@@ -1,0 +1,4 @@
+[submodule "external/plasma-manager"]
+	path = external/plasma-manager
+	url = git@github.com:nix-community/plasma-manager.git
+	branch = trunk
