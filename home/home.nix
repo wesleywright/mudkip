@@ -8,9 +8,7 @@
     ./git.nix
     ./neovim.nix
     ./ssh.nix
-    ./terminal.nix
     ./utilities.nix
-    ./wm.nix
   ];
 
   home = {
