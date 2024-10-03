@@ -52,6 +52,12 @@ in
       };
 
       window = {
+        commands = [
+          {
+            command = "floating enable";
+            criteria.class = "1Password";
+          }
+        ];
         titlebar = false;
       };
     };
