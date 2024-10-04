@@ -2,8 +2,9 @@
 
 let
   # Constants for storage devices.
-  externalStorageBoot = "/dev/disk/by-uuid/C1D3-ACEC";
-  externalStorageBtrfs = "/dev/disk/by-uuid/3ab5f40a-0c81-4d00-8940-62aea70097c4";
+  mudkipBootDevice = "/dev/disk/by-label/MUDKIP_BOOT";
+  mudkipEncryptedDevice = "/dev/disk/by-label/mudkip.luks";
+  mudkipBtrfsDevice = "/dev/disk/by-label/mudkip.btrfs";
   storage1EncryptedDevice = "/dev/disk/by-label/storage1.luks";
   storage1BtrfsDevice = "/dev/disk/by-label/storage1.btrfs";
 
@@ -22,7 +23,7 @@ let
   primarySubvolume =
     subvolume: extraOptions:
     btrfsSubvolume {
-      device = externalStorageBtrfs;
+      device = mudkipBtrfsDevice;
       subvolume = subvolume;
       extraOptions = extraOptions;
     };
@@ -37,11 +38,12 @@ in
 {
   # Each encrypted device needs to be listed here so that it can be decrypted
   # on bootup.
+  boot.initrd.luks.devices."mudkip".device = mudkipEncryptedDevice;
   boot.initrd.luks.devices."storage1".device = storage1EncryptedDevice;
 
   fileSystems = {
     "/boot" = {
-      device = externalStorageBoot;
+      device = mudkipBootDevice;
       fsType = "vfat";
       options = [
         "fmask=0022"
