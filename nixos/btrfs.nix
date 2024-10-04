@@ -11,7 +11,7 @@ let
       LOCK_PATH=/tmp/create-snapshots.lock
       function acquireLock {
         echo "acquiring lock at $LOCK_PATH"
-        exec 3< "$LOCK_PATH"
+        exec 3> "$LOCK_PATH"
         flock -x 3
       }
 
