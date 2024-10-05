@@ -36,7 +36,10 @@ in
 {
   services.btrfs.autoScrub = {
     enable = true;
-    fileSystems = [ "/" ];
+    fileSystems = [
+      "/"
+      "/mnt/games"
+    ];
   };
 
   systemd = {

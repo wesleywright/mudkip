@@ -60,6 +60,11 @@ in
       # fails to mount
       "nofail"
     ];
+    "/mnt/audiobooks" = storage1Subvolume "audiobooks" [
+      # Since this drive only has audiobook content, we can continue booting if it
+      # fails to mount
+      "nofail"
+    ];
   };
 
   swapDevices = [ ];
