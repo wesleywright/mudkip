@@ -10,7 +10,6 @@
     ./1password.nix
     ./audio.nix
     ./boot.nix
-    ./btrfs.nix
     ./desktop-environment.nix
     ./filesystems.nix
     ./flatpak.nix

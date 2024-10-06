@@ -36,6 +36,16 @@ let
       # components, we don't want to fail the boot if it fails to mount.
       extraOptions = extraOptions ++ [ "nofail" ];
     };
+
+  mkSnapperConfig = mountPoint: {
+    SUBVOLUME = mountPoint;
+    TIMELINE_CREATE = true;
+    TIMELINE_CLEANUP = true;
+    TIMELINE_LIMIT_HOURLY = 24 * 7;
+    TIMELINE_LIMIT_DAILY = 14;
+    TIMELINE_LIMIT_WEEKLY = 8;
+    TIMELINE_LIMIT_MONTHLY = 12;
+  };
 in
 {
   # Each encrypted device needs to be listed here so that it can be decrypted
@@ -60,6 +70,24 @@ in
     "/mnt/games" = storage1Subvolume "games" [ ];
     "/mnt/audiobooks" = storage1Subvolume "audiobooks" [ ];
     "/mnt/music" = storage1Subvolume "music" [ ];
+  };
+
+  services.btrfs.autoScrub = {
+    enable = true;
+    fileSystems = [
+      "/"
+      "/mnt/games"
+    ];
+  };
+  services.snapper = {
+    configs = {
+      home = mkSnapperConfig "/home";
+
+      audiobooks = mkSnapperConfig "/mnt/audiobooks";
+      games = mkSnapperConfig "/mnt/games";
+      music = mkSnapperConfig "/mnt/music";
+    };
+    persistentTimer = true;
   };
 
   swapDevices = [ ];
