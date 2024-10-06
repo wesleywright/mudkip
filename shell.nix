@@ -11,6 +11,8 @@ pkgs.mkShell {
     pkgs.npins
     pkgs.nixfmt-rfc-style
   ];
+
+  HOME_MANAGER_CONFIG = builtins.toString ./home/home.nix;
   NIX_PATH =
     let
       sourcesWithConfiguration = {
