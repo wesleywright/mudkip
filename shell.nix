@@ -15,11 +15,10 @@ pkgs.mkShell {
   HOME_MANAGER_CONFIG = builtins.toString ./home/home.nix;
   NIX_PATH =
     let
-      sourcesWithConfiguration = {
-        inherit sources;
+      sourcesWithConfiguration = sources // {
         nixos-config = builtins.toString ./nixos/configuration.nix;
       };
-      mapped = builtins.mapAttrs (name: path: "${name}=${path}") sources;
+      mapped = builtins.mapAttrs (name: path: "${name}=${path}") sourcesWithConfiguration;
       strings = builtins.attrValues mapped;
     in
     builtins.concatStringsSep ":" strings;
