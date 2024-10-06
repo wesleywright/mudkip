@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../external/plasma-manager/modules
+    <plasma-manager/modules>
 
     ./konsole.nix
   ];
