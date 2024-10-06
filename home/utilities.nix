@@ -11,5 +11,7 @@
     pkgs.python3
     # Like grep, but nicer :-)
     pkgs.ripgrep
+
+    pkgs.tree
   ];
 }
