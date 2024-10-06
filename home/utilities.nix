@@ -6,7 +6,7 @@
     pkgs.foot
 
     # Useful for bootstrapping pins for new projects
-    pkgs.npin
+    pkgs.npins
 
     # Progress Viewer, useful for inspecting miscellaneous byte stream operations
     pkgs.pv
