@@ -32,7 +32,9 @@ let
     btrfsSubvolume {
       device = storage1BtrfsDevice;
       subvolume = subvolume;
-      extraOptions = extraOptions;
+      # Since this storage is only used for media and not for critical system
+      # components, we don't want to fail the boot if it fails to mount.
+      extraOptions = extraOptions ++ [ "nofail" ];
     };
 in
 {
@@ -55,16 +57,9 @@ in
     "/home" = primarySubvolume "home" [ ];
     "/nix" = primarySubvolume "nix" [ "noatime" ];
 
-    "/mnt/games" = storage1Subvolume "games" [
-      # Since this drive only has game content, we can continue booting if it
-      # fails to mount
-      "nofail"
-    ];
-    "/mnt/audiobooks" = storage1Subvolume "audiobooks" [
-      # Since this drive only has audiobook content, we can continue booting if it
-      # fails to mount
-      "nofail"
-    ];
+    "/mnt/games" = storage1Subvolume "games" [ ];
+    "/mnt/audiobooks" = storage1Subvolume "audiobooks" [ ];
+    "/mnt/music" = storage1Subvolume "music" [ ];
   };
 
   swapDevices = [ ];
