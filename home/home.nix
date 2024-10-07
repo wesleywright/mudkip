@@ -6,6 +6,7 @@
     ./ffxiv.nix
     ./fish.nix
     ./git.nix
+    ./music.nix
     ./neovim.nix
     ./plasma
     ./ssh.nix
@@ -20,13 +21,17 @@
     stateVersion = "24.05";
   };
 
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (pkgs.lib.getName pkg) [
-      "steam"
-      "steam-run"
-      "steam-original"
-    ];
+  nixpkgs.config = {
+    allowUnfreePredicate =
+      pkg:
+      builtins.elem (pkgs.lib.getName pkg) [
+        "steam"
+        "steam-run"
+        "steam-original"
+      ];
+
+    permittedInsecurePackages = [ "python3.11-youtube-dl-2021.12.17" ];
+  };
 
   programs = {
     # Let Home Manager install and manage itself.
