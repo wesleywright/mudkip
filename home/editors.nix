@@ -56,6 +56,10 @@
       rust-analyzer = {
         server.path = "rust-analyzer";
       };
+      window = {
+        menuBarVisibility = "compact";
+        titleBarStyle = "custom";
+      };
       workbench.colorTheme = "Solarized Light";
 
       "[rust]" = {
