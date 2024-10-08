@@ -3,11 +3,11 @@
 {
   imports = [
     ./direnv.nix
+    ./editors.nix
     ./ffxiv.nix
     ./fish.nix
     ./git.nix
     ./music.nix
-    ./neovim.nix
     ./plasma
     ./ssh.nix
     ./utilities.nix
@@ -28,6 +28,7 @@
         "steam"
         "steam-run"
         "steam-original"
+        "vscode"
       ];
 
     permittedInsecurePackages = [ "python3.11-youtube-dl-2021.12.17" ];
