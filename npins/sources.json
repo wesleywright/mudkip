@@ -20,9 +20,9 @@
         "repo": "nixpkgs"
       },
       "branch": "nixos-24.05",
-      "revision": "ecbc1ca8ffd6aea8372ad16be9ebbb39889e55b6",
-      "url": "https://github.com/nixos/nixpkgs/archive/ecbc1ca8ffd6aea8372ad16be9ebbb39889e55b6.tar.gz",
-      "hash": "0yfaybsa30zx4bm900hgn3hz92javlf4d47ahdaxj9fai00ddc1x"
+      "revision": "d51c28603def282a24fa034bcb007e2bcb5b5dd0",
+      "url": "https://github.com/nixos/nixpkgs/archive/d51c28603def282a24fa034bcb007e2bcb5b5dd0.tar.gz",
+      "hash": "133kh160sk3g161z7j7q0ranp20s0x6ciyvxcwwd4z601lwsdv3l"
     },
     "plasma-manager": {
       "type": "Git",
