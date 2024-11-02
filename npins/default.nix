@@ -78,3 +78,4 @@ if version == 3 then
   builtins.mapAttrs (_: mkSource) data.pins
 else
   throw "Unsupported format version ${toString version} in sources.json. Try running `npins upgrade`"
+# Pins updated at 2024-11-02T17:06:48-05:00
