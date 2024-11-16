@@ -84,7 +84,6 @@ in
       home = mkSnapperConfig "/home";
 
       audiobooks = mkSnapperConfig "/mnt/audiobooks";
-      games = mkSnapperConfig "/mnt/games";
       music = mkSnapperConfig "/mnt/music";
     };
     persistentTimer = true;
