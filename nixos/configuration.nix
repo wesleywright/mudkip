@@ -11,6 +11,7 @@
     ./audio.nix
     ./boot.nix
     ./desktop-environment.nix
+    ./fans.nix
     ./filesystems.nix
     ./flatpak.nix
     ./fonts.nix
