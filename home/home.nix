@@ -17,11 +17,6 @@
     username = "naptime";
     homeDirectory = "/home/naptime";
 
-    sessionVariables = {
-      # Instruct Electron apps to prefer Wayland by default.
-      ELECTRON_OZONE_PLATFORM_HINT = "auto";
-    };
-
     # Specifies API compatibility version, do not change on Home Manager upgrade
     stateVersion = "24.05";
   };
