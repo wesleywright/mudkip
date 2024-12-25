@@ -16,6 +16,7 @@
     ./flatpak.nix
     ./fonts.nix
     ./hardware-configuration.nix
+    ./keyboard.nix
     ./locale.nix
     ./networking.nix
     ./sleep.nix
