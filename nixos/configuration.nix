@@ -19,6 +19,7 @@
     ./keyboard.nix
     ./locale.nix
     ./networking.nix
+    ./nix.nix
     ./sleep.nix
     ./steam.nix
     ./unfree.nix
