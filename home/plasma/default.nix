@@ -2,8 +2,6 @@
 
 {
   imports = [
-    <plasma-manager/modules>
-
     ./konsole.nix
   ];
 

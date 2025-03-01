@@ -28,6 +28,7 @@
         "steam"
         "steam-run"
         "steam-original"
+        "steam-unwrapped"
         "vscode"
       ];
 
