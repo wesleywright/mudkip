@@ -2,6 +2,9 @@
 
 {
   home.packages = [
+    # Like cat, but prettier
+    pkgs.bat
+
     # Useful when configuring Konsole/&c.
     pkgs.foot
 
