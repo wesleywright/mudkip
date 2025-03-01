@@ -16,20 +16,24 @@
 
   outputs =
     {
-      lib,
       nixpkgs,
       home-manager,
       plasma-manager,
       ...
     }:
     let
-      pkgs = import nixpkgs { system = "x86_64-linux"; };
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
     in
     {
+      devShell.${system} = pkgs.mkShell {
+        packages = [
+          pkgs.nixfmt-rfc-style
+        ];
+      };
+
       homeConfigurations."naptime" = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          system = "x86_64-linux";
-        };
+        inherit pkgs;
 
         modules = [
           plasma-manager.homeManagerModules.plasma-manager
