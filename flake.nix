@@ -15,7 +15,7 @@
   };
 
   outputs =
-    {
+    inputs@{
       nixpkgs,
       home-manager,
       plasma-manager,
@@ -39,6 +39,16 @@
           plasma-manager.homeManagerModules.plasma-manager
 
           ./home/home.nix
+        ];
+      };
+
+      nixosConfigurations.mudkip = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+        };
+
+        modules = [
+          ./nixos/configuration.nix
         ];
       };
     };

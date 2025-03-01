@@ -26,11 +26,6 @@
     ./users.nix
   ];
 
-  environment.variables = {
-    NIX_PATH = lib.mkForce (import ../npins/nixpath.nix);
-  };
-
-  system.copySystemConfiguration = true;
   # This variable is used to indicate API compatibility, and does not need to be changed on
   # version upgrade.
   system.stateVersion = "24.05"; # Did you read the comment?
