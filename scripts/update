@@ -4,13 +4,7 @@ set -eou pipefail
 
 REPOROOT="$(git rev-parse --show-toplevel)"
 
-DESCRIPTION="$(nix flake metadata --json "$REPOROOT" | jq -r .description)"
-if [[ $DESCRIPTION != "mudkip system configuration files" ]]; then
-  echo >&2 'error: mismatched description `'"$DESCRIPTION"'`'
-  exit 1
-fi
-
 set -x
-nix flake update "$REPOROOT"
+nix flake update --flake "$REPOROOT"
 home-manager switch --flake "$REPOROOT"
 sudo nixos-rebuild switch --flake "$REPOROOT"
