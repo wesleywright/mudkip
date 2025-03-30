@@ -16,6 +16,25 @@ let
     };
     vendorHash = "sha256-uCU5WLCKl5T4I1OccVl7WU0GM/t4RyAEmzHkJ22py30=";
   };
+
+  wrapperScript = pkgs.writeShellApplication {
+    name = "wireproxy-injected-secret";
+
+    runtimeInputs = [ wireproxy ];
+
+    text = ''
+      PORT=$1
+      URL=$2
+
+      wireproxy --config=<(op inject <<EOS
+      [http]
+      BindAddress = 127.0.0.1:$PORT
+
+      {{ $URL }}
+      EOS
+      )
+    '';
+  };
 in
 {
   systemd.user.services.wireproxy1 = {
@@ -23,7 +42,7 @@ in
       WantedBy = [ "default.target" ];
     };
     Service = {
-      ExecStart = "${wireproxy}/bin/wireproxy --config ${config.xdg.configHome}/wireproxy/proxy1.ini";
+      ExecStart = "${wrapperScript}/bin/wireproxy-injected-secret 11789 op://Personal/protonvpn-nl-free/config";
     };
   };
 }
