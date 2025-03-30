@@ -11,6 +11,7 @@
     ./plasma
     ./ssh.nix
     ./utilities.nix
+    ./wireguard.nix
   ];
 
   home = {
