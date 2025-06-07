@@ -49,9 +49,15 @@
         formatOnSave = true;
         #formatOnSaveMode = "modificationsIfAvailable";
 
+        inlayHints.enabled = "off";
+
         renderWhitespace = "boundary";
         rulers = [ 80 ];
         scrollBeyondLastLine = false;
+      };
+
+      explorer = {
+        excludeGitIgnore = true;
       };
 
       rust-analyzer = {
