@@ -24,6 +24,7 @@
     ./steam.nix
     ./unfree.nix
     ./users.nix
+    ./virtualization.nix
   ];
 
   # This variable is used to indicate API compatibility, and does not need to be changed on
