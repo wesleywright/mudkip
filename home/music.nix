@@ -1,5 +1,8 @@
 { pkgs, ... }:
 
 {
-  home.packages = [ pkgs.lollypop ];
+  home.packages = [
+    pkgs.hydrogen
+    pkgs.lollypop
+  ];
 }
