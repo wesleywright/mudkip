@@ -8,6 +8,7 @@
     ./fish.nix
     ./git.nix
     ./music.nix
+    ./office.nix
     ./plasma
     ./ssh.nix
     ./utilities.nix
