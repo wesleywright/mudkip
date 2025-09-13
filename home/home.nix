@@ -11,6 +11,7 @@
     ./office.nix
     ./plasma
     ./ssh.nix
+    ./terminal.nix
     ./utilities.nix
     ./wireguard.nix
   ];
