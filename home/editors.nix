@@ -25,53 +25,56 @@
   programs.vscode = {
     enable = true;
 
-    # For now, let's turn this off and see how well updates can be managed via
-    # Nix
-    enableExtensionUpdateCheck = false;
-    enableUpdateCheck = false;
-
-    extensions = [
-      pkgs.vscode-extensions.mkhl.direnv
-      pkgs.vscode-extensions.rust-lang.rust-analyzer
-      pkgs.vscode-extensions.vscodevim.vim
-    ];
-
     # Similarly to update checks, let's try managing extensions solely through
     # nix
     mutableExtensionsDir = false;
 
-    userSettings = {
-      files = {
-        autoSave = "onFocusChange";
-      };
+    profiles.default = {
+      # For now, let's turn this off and see how well updates can be managed via
+      # Nix
+      enableExtensionUpdateCheck = false;
+      enableUpdateCheck = false;
 
-      editor = {
-        formatOnSave = true;
-        #formatOnSaveMode = "modificationsIfAvailable";
+      extensions = [
+        pkgs.vscode-extensions.mkhl.direnv
+        pkgs.vscode-extensions.rust-lang.rust-analyzer
+        pkgs.vscode-extensions.vscodevim.vim
+      ];
 
-        inlayHints.enabled = "off";
+      userSettings = {
+        files = {
+          autoSave = "onFocusChange";
+        };
 
-        renderWhitespace = "boundary";
-        rulers = [ 80 ];
-        scrollBeyondLastLine = false;
-      };
+        editor = {
+          formatOnSave = true;
+          #formatOnSaveMode = "modificationsIfAvailable";
 
-      explorer = {
-        excludeGitIgnore = true;
-      };
+          inlayHints.enabled = "off";
 
-      rust-analyzer = {
-        server.path = "rust-analyzer";
-      };
-      window = {
-        menuBarVisibility = "compact";
-        titleBarStyle = "custom";
-      };
-      workbench.colorTheme = "Solarized Light";
+          renderWhitespace = "boundary";
+          rulers = [ 80 ];
+          scrollBeyondLastLine = false;
+        };
 
-      "[rust]" = {
-        editor.rulers = [ 100 ];
+        explorer = {
+          excludeGitIgnore = true;
+        };
+
+        rust-analyzer = {
+          server.path = "rust-analyzer";
+        };
+        window = {
+          menuBarVisibility = "compact";
+          titleBarStyle = "custom";
+        };
+        workbench.colorTheme = "Solarized Light";
+
+        "[rust]" = {
+          editor.rulers = [ 100 ];
+        };
       };
     };
+
   };
 }
