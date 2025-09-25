@@ -22,7 +22,6 @@
     ./nix.nix
     ./sleep.nix
     ./steam.nix
-    ./unfree.nix
     ./users.nix
     ./virtualization.nix
   ];

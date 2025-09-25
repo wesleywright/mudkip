@@ -25,16 +25,7 @@
   };
 
   nixpkgs.config = {
-    allowUnfreePredicate =
-      pkg:
-      builtins.elem (pkgs.lib.getName pkg) [
-        "steam"
-        "steam-run"
-        "steam-original"
-        "steam-unwrapped"
-        "vscode"
-      ];
-
+    allowUnfree = true;
     permittedInsecurePackages = [ "python3.11-youtube-dl-2021.12.17" ];
   };
 

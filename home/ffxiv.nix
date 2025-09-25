@@ -46,6 +46,4 @@ in
     xivlauncher-submit-otp
     xivlauncher-submit-otp-desktop
   ];
-
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "xivlauncher" ];
 }
