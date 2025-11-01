@@ -10,6 +10,7 @@
     ./1password.nix
     ./audio.nix
     ./boot.nix
+    ./command-not-found.nix
     ./desktop-environment.nix
     ./fans.nix
     ./filesystems.nix
