@@ -42,5 +42,6 @@ in
 
     pkgs.tree
     pkgs.zip
+    pkgs.htop
   ];
 }
