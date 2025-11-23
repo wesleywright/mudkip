@@ -1,6 +1,11 @@
 { lib, pkgs, ... }:
 
 {
+  environment.systemPackages = [
+    # Make gamescope for available for games that need it.
+    pkgs.gamescope
+  ];
+
   # This seems to help with fully recognizing DualSense controllers.
   hardware.uinput.enable = true;
 
