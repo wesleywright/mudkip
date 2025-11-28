@@ -21,8 +21,8 @@
     ./locale.nix
     ./networking.nix
     ./nix.nix
-    ./sleep.nix
     ./steam.nix
+    ./udev.nix
     ./users.nix
     ./virtualization.nix
   ];
