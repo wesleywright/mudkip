@@ -35,8 +35,10 @@ in
 
     # Progress Viewer, useful for inspecting miscellaneous byte stream operations
     pkgs.pv
-    # Useful for running one-off scripts
-    pkgs.python3
+    # Useful for running one-off scripts.
+    # Pinned to 3.14 now since the default is 3.12; we can move to default
+    # on future versions, or continue to pin newer versions.
+    pkgs.python314
     # Like grep, but nicer :-)
     pkgs.ripgrep
 
