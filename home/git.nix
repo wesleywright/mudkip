@@ -3,12 +3,16 @@
 {
   programs.git = {
     enable = true;
-    extraConfig = {
+
+    settings = {
       init = {
         defaultBranch = "main";
       };
+
+      user = {
+        email = "wesley@wesleywright.me";
+        name = "Wesley Wright";
+      };
     };
-    userEmail = "wesley@wesleywright.me";
-    userName = "Wesley Wright";
   };
 }
