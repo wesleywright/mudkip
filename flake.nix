@@ -24,6 +24,26 @@
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
+
+      allHosts = nixpkgs.lib.attrNames (builtins.readDir ./nixos/per-host);
+      makeHostConfig =
+        name:
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+          };
+
+          modules = [
+            ./nixos/base-configuration
+            ./nixos/per-host/${name}
+            (
+              { ... }:
+              {
+                networking.hostName = name;
+              }
+            )
+          ];
+        };
     in
     {
       devShell.${system} = pkgs.mkShell {
@@ -42,14 +62,11 @@
         ];
       };
 
-      nixosConfigurations.mudkip = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-        };
-
-        modules = [
-          ./nixos/configuration.nix
-        ];
-      };
+      nixosConfigurations = builtins.listToAttrs (
+        builtins.map (name: {
+          name = name;
+          value = makeHostConfig name;
+        }) allHosts
+      );
     };
 }
