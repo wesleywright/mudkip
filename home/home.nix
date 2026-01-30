@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./autostart.nix
     ./direnv.nix
     ./editors.nix
     ./ffxiv.nix
