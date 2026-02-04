@@ -4,6 +4,7 @@
   imports = [
     ./1password.nix
     ./audio.nix
+    ./bluetooth.nix
     ./boot.nix
     ./command-not-found.nix
     ./desktop-environment.nix
