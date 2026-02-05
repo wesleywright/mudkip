@@ -15,7 +15,6 @@
     ./ssh.nix
     ./terminal.nix
     ./utilities.nix
-    ./wireguard.nix
   ];
 
   home = {
