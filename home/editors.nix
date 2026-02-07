@@ -26,6 +26,15 @@
     '';
 
     plugins = with pkgs.vimPlugins; [
+      # Integrates direnv from any project directories so that neovim can use the correct
+      # environment configuration.
+      direnv-vim
+
+      # This plugin adds a lot of fancy features, but I'm mostly interested in the gutter bar
+      # features (it shows added and removed lines) and status line integration.
+      gitsigns-nvim
+
+      # This is the best-looking Solarized theme I have found that works with neovim as of Feb 2026.
       vim-solarized8
     ];
   };
