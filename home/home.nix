@@ -3,6 +3,7 @@
 {
   imports = [
     ./autostart.nix
+    ./browser.nix
     ./direnv.nix
     ./editors.nix
     ./ffxiv.nix
@@ -44,7 +45,5 @@
         fi
       '';
     };
-
-    firefox.enable = true;
   };
 }
