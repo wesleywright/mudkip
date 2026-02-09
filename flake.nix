@@ -55,6 +55,10 @@
     {
       devShell.${system} = pkgs.mkShell {
         packages = [
+          # Provides a Nix LSP implementation.
+          pkgs.nixd
+
+          # Autoformats Nix files.
           pkgs.nixfmt-rfc-style
         ];
       };

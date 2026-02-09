@@ -23,6 +23,30 @@
 
       set listchars=tab:␉·,trail:·,extends:>,precedes:<
       set list
+
+      " Set diagnostic colors to match Solarized.
+      highlight DiagnosticError guifg=#dc322f " red
+      highlight DiagnosticWarn guifg=#b58900 " yellow
+      highlight DiagnosticInfo guifg=#2aa198 " cyan
+      highlight DiagnosticHint guifg=#6c71c4 " violet
+    '';
+
+    extraLuaConfig = ''
+      vim.lsp.enable("nixd")
+      vim.lsp.enable("rust_analyzer")
+
+      require("tiny-inline-diagnostic").setup({
+        preset = "modern",
+        options = {
+          multilines = {
+            enabled = true,
+          },
+          show_source = {
+            enabled = true,
+            if_many = true,
+          },
+        },
+      })
     '';
 
     plugins = with pkgs.vimPlugins; [
@@ -33,6 +57,14 @@
       # This plugin adds a lot of fancy features, but I'm mostly interested in the gutter bar
       # features (it shows added and removed lines) and status line integration.
       gitsigns-nvim
+
+      # Contains configuration presets for many common LSP implementations; used for convenience
+      # to avoid having to manually configure LSPs.
+      nvim-lspconfig
+
+      # Very small GUI upgrade for inline diagnostics to make them prettier and handle line
+      # wrapping better.
+      tiny-inline-diagnostic-nvim
 
       # This is the best-looking Solarized theme I have found that works with neovim as of Feb 2026.
       vim-solarized8
