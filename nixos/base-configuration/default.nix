@@ -13,6 +13,7 @@
     ./locale.nix
     ./networking.nix
     ./nix.nix
+    ./ssh.nix
     ./steam.nix
     ./udev.nix
     ./users.nix
