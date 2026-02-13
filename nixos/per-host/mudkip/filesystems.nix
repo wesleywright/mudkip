@@ -7,6 +7,8 @@ let
   mudkipBtrfsDevice = "/dev/disk/by-label/mudkip.btrfs";
   storage1EncryptedDevice = "/dev/disk/by-label/storage1.luks";
   storage1BtrfsDevice = "/dev/disk/by-label/storage1.btrfs";
+  storage2EncryptedDevice = "/dev/disk/by-label/storage2.luks";
+  storage2BtrfsDevice = "/dev/disk/by-label/storage2.btrfs";
 
   # Convenience functions for specifying btrfs subvolume mounts.
   btrfsSubvolume =
@@ -36,6 +38,13 @@ let
       # components, we don't want to fail the boot if it fails to mount.
       extraOptions = extraOptions ++ [ "nofail" ];
     };
+  storage2Subvolume =
+    subvolume: extraOptions:
+    btrfsSubvolume {
+      device = storage2BtrfsDevice;
+      subvolume = subvolume;
+      extraOptions = extraOptions ++ [ "nofail" ];
+    };
 
   mkSnapperConfig = mountPoint: {
     SUBVOLUME = mountPoint;
@@ -52,6 +61,7 @@ in
   # on bootup.
   boot.initrd.luks.devices."mudkip".device = mudkipEncryptedDevice;
   boot.initrd.luks.devices."storage1".device = storage1EncryptedDevice;
+  boot.initrd.luks.devices."storage2".device = storage2EncryptedDevice;
 
   fileSystems = {
     "/boot" = {
@@ -67,16 +77,26 @@ in
     "/home" = primarySubvolume "home" [ ];
     "/nix" = primarySubvolume "nix" [ "noatime" ];
 
-    "/mnt/games" = storage1Subvolume "games" [ ];
-    "/mnt/audiobooks" = storage1Subvolume "audiobooks" [ ];
-    "/mnt/music" = storage1Subvolume "music" [ ];
+    # A properly developed game *should* keep all of its assets compressed on disc by default.
+    # However, the game industry doesn't seem to see this as a priority (see, for example, the
+    # massive data duplication present in the initial version of Helldivers 2), and there tends
+    # to be a decent opportunity for space savings by applying compression to game files. The
+    # default ZSTD configuration should be a good tradeoff.
+    "/mnt/games" = storage1Subvolume "games" [ "compress=zstd" ];
+
+    # Audiobooks and music generally use formats like FLAC that are difficult to compress any
+    # further, so we don't bother with enabling ZSTD for them.
+    "/mnt/music" = storage2Subvolume "music" [ ];
+    "/mnt/audiobooks" = storage2Subvolume "audiobooks" [ ];
   };
 
   services.btrfs.autoScrub = {
     enable = true;
     fileSystems = [
       "/"
+      "/mnt/audiobooks"
       "/mnt/games"
+      "/mnt/music"
     ];
   };
   services.snapper = {
