@@ -9,6 +9,7 @@
     ./desktop-environment.nix
     ./fonts.nix
     ./flatpak.nix
+    ./ios.nix
     ./keyboard.nix
     ./locale.nix
     ./networking.nix
