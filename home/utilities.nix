@@ -45,5 +45,9 @@ in
     pkgs.tree
     pkgs.zip
     pkgs.htop
+
+    # Various networking utilities
+    pkgs.dig
+    pkgs.whois
   ];
 }
