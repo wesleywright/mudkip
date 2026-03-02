@@ -44,6 +44,7 @@ in
 
     pkgs.tree
     pkgs.zip
+    pkgs.unzip
     pkgs.htop
 
     # Various networking utilities
