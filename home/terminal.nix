@@ -13,7 +13,7 @@
       font-family = "Input Mono";
       font-size = 14;
 
-      theme = "Builtin Solarized Dark";
+      theme = "iTerm2 Solarized Dark";
 
       window-decoration = "client";
       window-theme = "ghostty";
