@@ -39,7 +39,7 @@
       highlight DiagnosticHint guifg=#6c71c4 " violet
     '';
 
-    extraLuaConfig = ''
+    initLua = ''
       vim.lsp.enable("nixd")
       vim.lsp.config("rust_analyzer", {
         settings = {
@@ -86,5 +86,10 @@
       # This is the best-looking Solarized theme I have found that works with neovim as of Feb 2026.
       vim-solarized8
     ];
+
+    # New defaults as of 26.05, set explicitly to silence
+    # warnings
+    withRuby = false;
+    withPython3 = false;
   };
 }

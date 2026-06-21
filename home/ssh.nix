@@ -4,7 +4,8 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks."*" = {
+    settings = {
+      "*" = { };
     };
     extraConfig = ''
       IdentityAgent ~/.1password/agent.sock
