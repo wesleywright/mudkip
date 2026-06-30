@@ -11,6 +11,7 @@
     ./git.nix
     ./music.nix
     ./nix-index.nix
+    ./nixpkgs.nix
     ./office.nix
     ./plasma
     ./ssh.nix
