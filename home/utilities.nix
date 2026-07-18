@@ -21,10 +21,23 @@ let
       sudo btrfs subvolume snapshot "$BACKUP_SUBVOLUME" "$SNAPSHOTS_DIRECTORY/$TIMESTAMP"
     '';
   };
+
+  notes = pkgs.writeShellApplication {
+    name = "notes";
+    runtimeInputs = [
+      pkgs.neovim
+    ];
+    text = ''
+      DIRECTORY="$HOME"/notes/"$(date +%Y)"/"$(date +%m)"
+      FULL_PATH="$DIRECTORY"/"$(date +%d)".md
+      exec nvim "$FULL_PATH"
+    '';
+  };
 in
 {
   home.packages = [
     backup-bg3
+    notes
 
     # Like cat, but prettier
     pkgs.bat
