@@ -18,6 +18,8 @@
       au BufNewFile,BufRead *.nix set tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab autoindent
       au BufNewFile,BufRead *.ml set tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab autoindent
 
+      au BufNewFile,BufRead *.md set tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab autoindent linebreak
+
       " Automatically save the current buffer when another buffer is selected *or* when neovim loses
       " focus.
       augroup autosave_buffer
