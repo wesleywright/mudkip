@@ -38,6 +38,7 @@ let
 in
 {
   home.packages = [
+    # Custom scriptlets
     backup-bg3
     notes
 
@@ -59,6 +60,7 @@ in
     # Like grep, but nicer :-)
     pkgs.ripgrep
 
+    # Miscellaneous shell conveniences
     pkgs.tree
     pkgs.zip
     pkgs.unzip
@@ -67,5 +69,8 @@ in
     # Various networking utilities
     pkgs.dig
     pkgs.whois
+
+    # Webcam viewer for convenience
+    pkgs.kdePackages.kamoso
   ];
 }
