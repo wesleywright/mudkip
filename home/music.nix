@@ -8,5 +8,8 @@
     pkgs.lollypop
     # Open source Shazam client
     pkgs.songrec
+    # Very handy tag editor that pulls in data from MusicBrainz; makes normalization
+    # much easier
+    pkgs.picard
   ];
 }
