@@ -43,6 +43,8 @@
 
     initLua = ''
       vim.lsp.enable("nixd")
+
+      -- Rust
       vim.lsp.config("rust_analyzer", {
         settings = {
           ['rust-analyzer'] = {
@@ -53,6 +55,10 @@
         },
       })
       vim.lsp.enable("rust_analyzer")
+
+      -- Python
+      vim.lsp.enable("ruff")
+      vim.lsp.enable("pyrefly")
 
       require("tiny-inline-diagnostic").setup({
         preset = "modern",
