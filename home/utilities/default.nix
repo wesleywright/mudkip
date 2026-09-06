@@ -30,6 +30,13 @@ let
         pkgs.neovim
       ];
     };
+    sync-music-to-ios = {
+      runtimeInputs = [
+        pkgs.coreutils
+        pkgs.ifuse
+        pkgs.rsync
+      ];
+    };
   };
 in
 {
