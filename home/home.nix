@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -16,7 +16,7 @@
     ./plasma
     ./ssh.nix
     ./terminal.nix
-    ./utilities.nix
+    ./utilities
   ];
 
   home = {
