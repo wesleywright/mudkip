@@ -52,6 +52,9 @@
 
       fish_prompt = {
         body = ''
+          set -l last_status "$status"
+          set -l last_duration "$CMD_DURATION"
+
           echo -e ""
 
           set -g __prompt_count 0
@@ -59,14 +62,20 @@
           # User
           #
           set -l user (id -un $USER)
+          __print_color brblack "┌"
           __print_color red "$user"
+
+          # Current time
+          #
+          __print_color brblack "at"
+          __print_color brcyan (date --rfc-3339=seconds)
 
           # Host
           #
           set -l host_name (hostname -s)
-          set -l host_glyph "at"
+          set -l host_glyph "on"
 
-          __print_color white "$host_glyph"
+          __print_color brblack "$host_glyph"
           __print_color yellow "$host_name"
 
 
@@ -75,17 +84,17 @@
           set -l pwd_glyph "in"
           set -l pwd_string (echo $PWD | sed 's|^'$HOME'\(.*\)$|~\1|')
 
-          __print_color white "$pwd_glyph"
+          __print_color brblack "$pwd_glyph"
           __print_color cyan "$pwd_string"
 
           # Git
           #
           if git_is_repo
               set -l branch_name (git_branch_name)
-              set -l git_glyph "on"
+              set -l git_glyph "on ref"
               set -l git_branch_glyph
 
-              __print_color white "$git_glyph"
+              __print_color brblack "$git_glyph"
               __print_color blue "$branch_name"
 
               if git_is_touched
@@ -100,7 +109,7 @@
                   end
               end
 
-              __print_color cyan "$git_branch_glyph"
+              __print_color brgreen "$git_branch_glyph"
 
               if __git_upstream_configured
                   set -l git_ahead (command git rev-list --left-right --count HEAD...@"{u}" | awk '
@@ -109,51 +118,29 @@
                   ')
 
                   if test ! -z "$git_ahead"
-                      __print_color cyan "$git_ahead"
+                      __print_color brgreen "$git_ahead"
                   end
               end
           end
 
-          __print_color red "\e[K\n❯"
-        '';
+          if test '(' "$last_duration" -gt 5000 ')' -o '(' "$last_status" -ne 0 ')'
+              set -l human_duration (echo "$last_duration" | humanize_duration)
+              set -l brblue (set_color brblue)
+              set -g __prompt_count 0
+              __print_color brblack "\n│"
+              __print_color brblue "Last command exited with code"
+              __print_color brmagenta "$last_status"
+              __print_color brblue "after"
+              __print_color brmagenta "$human_duration$brblue."
+          end
 
-        description = "Simple Fish Prompt";
+          __print_color brblack "\e[K\n└"
+        '';
       };
 
       fish_right_prompt = {
         body = ''
-          set -l status_copy $status
-          set -l status_color cyan
-
-          if test "$status_copy" -ne 0
-              set status_color red
-          end
-
-          if test "$CMD_DURATION" -gt 100
-              set -l duration_copy $CMD_DURATION
-              set -l duration (echo $CMD_DURATION | humanize_duration)
-
-              echo -sn (set_color $status_color) "$duration" (set_color normal)
-          end
-
-          if set -l last_job_id (last_job_id -l)
-              echo -sn (set_color $status_color) " %$last_job_id" (set_color normal)
-          end
-
-          echo -sn (set_color brgreen) ' ' (date "+%H:%M") (set_color normal)
-
-          if test "$fish_key_bindings" = "fish_vi_key_bindings"
-              switch $fish_bind_mode
-                  case default
-                      echo ' [n]'
-                  case insert
-                      echo ' [i]'
-                  case replace-one
-                      echo ' [r]'
-                  case visual
-                      echo ' [v]'
-              end
-          end
+          # Disabled
         '';
       };
 
