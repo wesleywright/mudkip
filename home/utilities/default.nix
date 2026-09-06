@@ -1,15 +1,19 @@
 { lib, pkgs, ... }:
 
 let
-  makeCustomScript = { name, runtimeInputs }: pkgs.writeShellApplication {
-    name = name;
-    runtimeInputs = runtimeInputs;
-    text = builtins.readFile (./. + "/${name}.sh");
-  };
+  makeCustomScript =
+    { name, runtimeInputs }:
+    pkgs.writeShellApplication {
+      name = name;
+      runtimeInputs = runtimeInputs;
+      text = builtins.readFile (./. + "/${name}.sh");
+    };
 
-  makeCustomScripts = attrset: lib.attrsets.mapAttrsToList (name: arguments: 
-    makeCustomScript (arguments // { name = name; })
-  ) attrset;
+  makeCustomScripts =
+    attrset:
+    lib.attrsets.mapAttrsToList (
+      name: arguments: makeCustomScript (arguments // { name = name; })
+    ) attrset;
 
   customScripts = makeCustomScripts {
     backup-bg3 = {
