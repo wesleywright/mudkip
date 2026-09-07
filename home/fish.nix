@@ -150,7 +150,9 @@
               end
           end
 
-          if test '(' "$last_duration" -gt 5000 ')' -o '(' "$last_status" -ne 0 ')'
+          # If the last command failed *or* took >= 30 seconds to execute, print an extra
+          # line informing the user.
+          if test '(' "$last_duration" -gt 30000 ')' -o '(' "$last_status" -ne 0 ')'
               set -l human_duration (echo "$last_duration" | humanize_duration)
               set -l brblue (set_color brblue)
               __prompt_print_latest brblue "Last command exited with code" --new-line
