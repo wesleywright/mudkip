@@ -238,7 +238,12 @@
       # timestamps reflect the time when a command was actually run.
       set --global fish_transient_prompt 1
 
+      # Enable vi mode by default.
       fish_vi_key_bindings
+
+      # Despite the name "default" here, the nix default seems to be very bright with lots
+      # of blues. The theme named "default" is more subtle.
+      fish_config theme choose default
     '';
 
     plugins = [
