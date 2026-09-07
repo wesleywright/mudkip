@@ -11,16 +11,26 @@
         '';
       };
 
-      __print_color = {
+      __prompt_print = {
         body = ''
           set -l color  $argv[1]
           set -l string $argv[2]
 
-          if contains -- --new-line $argv
+          if contains -- --start $argv
+            echo ""
+            set_color brblack
+            printf '┌ '
+            set --global __prompt_count 2
+          else if contains -- --new-line $argv
             printf '\n'
             set_color brblack
             printf '│ '
-            set __prompt_count 2
+            set --global __prompt_count 2
+          else if contains -- --finish $argv
+            printf '\n'
+            set_color brblack
+            printf '└ '
+            set --global __prompt_count 2
           end
 
           set -l string_count (echo -n "$string" | wc -c)
@@ -52,7 +62,7 @@
           printf "$string "
           set_color normal
 
-          set -g __prompt_count "$new_total"
+          set --global __prompt_count "$new_total"
         '';
       };
 
@@ -67,36 +77,33 @@
           set -l last_duration "$CMD_DURATION"
 
           set -l is_final (contains -- --final-rendering $argv; echo $status)
-          function __print_color_latest --inherit-variable is_final
+          function __prompt_print_latest --inherit-variable is_final
             if test "$is_final" -eq 0
-              __print_color brgreen $argv[2..-1]
+              __prompt_print brgreen $argv[2..-1]
             else
-              __print_color $argv
+              __prompt_print $argv
             end
           end
 
-          echo -e ""
-
-          set -g __prompt_count 0
+          __prompt_print --start
 
           # User
           #
           set -l user (id -un $USER)
-          __print_color brblack "┌"
-          __print_color_latest red "$user"
+          __prompt_print_latest red "$user"
 
           # Current time
           #
-          __print_color brblack "at"
-          __print_color_latest brcyan (date --rfc-3339=seconds)
+          __prompt_print brblack "at"
+          __prompt_print_latest brcyan (date --rfc-3339=seconds)
 
           # Host
           #
           set -l host_name (hostname -s)
           set -l host_glyph "on"
 
-          __print_color brblack "$host_glyph"
-          __print_color_latest yellow "$host_name"
+          __prompt_print brblack "$host_glyph"
+          __prompt_print_latest yellow "$host_name"
 
 
           # Current working directory
@@ -104,8 +111,8 @@
           set -l pwd_glyph "in"
           set -l pwd_string (echo $PWD | sed 's|^'$HOME'\(.*\)$|~\1|')
 
-          __print_color brblack "$pwd_glyph"
-          __print_color_latest cyan "$pwd_string"
+          __prompt_print brblack "$pwd_glyph"
+          __prompt_print_latest cyan "$pwd_string"
 
           # Git
           #
@@ -114,8 +121,8 @@
               set -l git_glyph "on ref"
               set -l git_branch_glyph
 
-              __print_color brblack "$git_glyph"
-              __print_color_latest blue "$branch_name"
+              __prompt_print brblack "$git_glyph"
+              __prompt_print_latest blue "$branch_name"
 
               if git_is_touched
                   if git_is_staged
@@ -129,7 +136,7 @@
                   end
               end
 
-              __print_color_latest brgreen "$git_branch_glyph"
+              __prompt_print_latest brgreen "$git_branch_glyph"
 
               if __git_upstream_configured
                   set -l git_ahead (command git rev-list --left-right --count HEAD...@"{u}" | awk '
@@ -138,7 +145,7 @@
                   ')
 
                   if test ! -z "$git_ahead"
-                      __print_color_latest brgreen "$git_ahead"
+                      __prompt_print_latest brgreen "$git_ahead"
                   end
               end
           end
@@ -146,13 +153,13 @@
           if test '(' "$last_duration" -gt 5000 ')' -o '(' "$last_status" -ne 0 ')'
               set -l human_duration (echo "$last_duration" | humanize_duration)
               set -l brblue (set_color brblue)
-              __print_color_latest brblue "Last command exited with code" --new-line
-              __print_color_latest brmagenta "$last_status"
-              __print_color_latest brblue "after"
-              __print_color_latest brmagenta "$human_duration$brblue."
+              __prompt_print_latest brblue "Last command exited with code" --new-line
+              __prompt_print_latest brmagenta "$last_status"
+              __prompt_print_latest brblue "after"
+              __prompt_print_latest brmagenta "$human_duration$brblue."
           end
 
-          __print_color brblack "\e[K\n└"
+          __prompt_print --finish
         '';
       };
 
