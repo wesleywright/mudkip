@@ -55,6 +55,15 @@
           set -l last_status "$status"
           set -l last_duration "$CMD_DURATION"
 
+          set -l is_final (contains -- --final-rendering $argv; echo $status)
+          function __print_color_latest --inherit-variable is_final
+            if test "$is_final" -eq 0
+              __print_color brgreen "$argv[2]"
+            else
+              __print_color $argv
+            end
+          end
+
           echo -e ""
 
           set -g __prompt_count 0
@@ -63,12 +72,12 @@
           #
           set -l user (id -un $USER)
           __print_color brblack "┌"
-          __print_color red "$user"
+          __print_color_latest red "$user"
 
           # Current time
           #
           __print_color brblack "at"
-          __print_color brcyan (date --rfc-3339=seconds)
+          __print_color_latest brcyan (date --rfc-3339=seconds)
 
           # Host
           #
@@ -76,7 +85,7 @@
           set -l host_glyph "on"
 
           __print_color brblack "$host_glyph"
-          __print_color yellow "$host_name"
+          __print_color_latest yellow "$host_name"
 
 
           # Current working directory
@@ -85,7 +94,7 @@
           set -l pwd_string (echo $PWD | sed 's|^'$HOME'\(.*\)$|~\1|')
 
           __print_color brblack "$pwd_glyph"
-          __print_color cyan "$pwd_string"
+          __print_color_latest cyan "$pwd_string"
 
           # Git
           #
@@ -95,7 +104,7 @@
               set -l git_branch_glyph
 
               __print_color brblack "$git_glyph"
-              __print_color blue "$branch_name"
+              __print_color_latest blue "$branch_name"
 
               if git_is_touched
                   if git_is_staged
@@ -109,7 +118,7 @@
                   end
               end
 
-              __print_color brgreen "$git_branch_glyph"
+              __print_color_latest brgreen "$git_branch_glyph"
 
               if __git_upstream_configured
                   set -l git_ahead (command git rev-list --left-right --count HEAD...@"{u}" | awk '
@@ -118,7 +127,7 @@
                   ')
 
                   if test ! -z "$git_ahead"
-                      __print_color brgreen "$git_ahead"
+                      __print_color_latest brgreen "$git_ahead"
                   end
               end
           end
@@ -128,10 +137,10 @@
               set -l brblue (set_color brblue)
               set -g __prompt_count 0
               __print_color brblack "\n│"
-              __print_color brblue "Last command exited with code"
-              __print_color brmagenta "$last_status"
-              __print_color brblue "after"
-              __print_color brmagenta "$human_duration$brblue."
+              __print_color_latest brblue "Last command exited with code"
+              __print_color_latest brmagenta "$last_status"
+              __print_color_latest brblue "after"
+              __print_color_latest brmagenta "$human_duration$brblue."
           end
 
           __print_color brblack "\e[K\n└"
@@ -213,15 +222,13 @@
           '
         '';
       };
-
-      last_job_id = {
-        body = ''
-          jobs $argv | command awk '/^[0-9]+\t/ { print status = $1 } END { exit !status }'
-        '';
-      };
     };
 
     interactiveShellInit = ''
+      # Re-renders the prompt immediately before running a command. Used here to ensure that
+      # timestamps reflect the time when a command was actually run.
+      set --global fish_transient_prompt 1
+
       fish_vi_key_bindings
     '';
 
