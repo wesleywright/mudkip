@@ -16,6 +16,13 @@
           set -l color  $argv[1]
           set -l string $argv[2]
 
+          if contains -- --new-line $argv
+            printf '\n'
+            set_color brblack
+            printf '│ '
+            set __prompt_count 2
+          end
+
           set -l string_count (echo -n "$string" | wc -c)
 
           if test "$string_count" -eq 0
@@ -26,6 +33,10 @@
 
           if test "$new_total" -ge "$COLUMNS"
               printf '\n'
+              set_color brblack
+              printf '│   '
+
+              set string_count (math "$string_count + 4")
 
               if test "$string_count" -ge "$COLUMNS"
                   set -l safe (math "$COLUMNS - 1")
@@ -58,7 +69,7 @@
           set -l is_final (contains -- --final-rendering $argv; echo $status)
           function __print_color_latest --inherit-variable is_final
             if test "$is_final" -eq 0
-              __print_color brgreen "$argv[2]"
+              __print_color brgreen $argv[2..-1]
             else
               __print_color $argv
             end
@@ -135,9 +146,7 @@
           if test '(' "$last_duration" -gt 5000 ')' -o '(' "$last_status" -ne 0 ')'
               set -l human_duration (echo "$last_duration" | humanize_duration)
               set -l brblue (set_color brblue)
-              set -g __prompt_count 0
-              __print_color brblack "\n│"
-              __print_color_latest brblue "Last command exited with code"
+              __print_color_latest brblue "Last command exited with code" --new-line
               __print_color_latest brmagenta "$last_status"
               __print_color_latest brblue "after"
               __print_color_latest brmagenta "$human_duration$brblue."
